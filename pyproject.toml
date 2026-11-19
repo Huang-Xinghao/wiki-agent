@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "research-wiki-agent"
+version = "0.1.0"
+description = "Evidence-backed research Wiki curation, review, retrieval and knowledge graphs"
+readme = "README.md"
+requires-python = ">=3.11"
+license-files = ["THIRD_PARTY_NOTICES.md"]
+dependencies = ["openai>=1.0", "httpx>=0.27", "PyMuPDF>=1.24,<2", "Pillow>=10", "black>=24"]
+
+[project.scripts]
+wiki-agent = "wiki_agent.cli:main"
+research-wiki = "wiki_agent.tools.research_wiki:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "build>=1"]
+embedding = ["huggingface-hub>=0.26", "numpy>=1.26", "onnxruntime>=1.19", "tokenizers>=0.20"]
+
+[tool.setuptools.packages.find]
+include = ["wiki_agent*"]
+
+[tool.setuptools.package-data]
+wiki_agent = ["skills/*/SKILL.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
